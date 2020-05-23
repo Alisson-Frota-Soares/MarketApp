@@ -1,23 +1,41 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-import RCTCamera, {RNCamera} from "react-native-camera";
+import home from './pages/home'
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from '@react-navigation/drawer'
+
+
+const stackOptions = {
+
+}
+
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function homeRoute({ navigation }) {
+  return (
+
+    <Stack.Navigator >
+      <Stack.Screen name="home" component={home} options={{ headerShown: false }} />
+    </Stack.Navigator>
+
+  )
+}
+
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
   render() {
     return (
-      <View>
-        <RNCamera style={{width:'100%', height: '100%'}}
-          onBarCodeRead={(code) => alert(code.data)}
-        
-        />
-      </View>
-    );
-  }
+      <NavigationContainer>
+        <Drawer.Navigator>
+          <Drawer.Screen name="home" component={homeRoute} />
+        </Drawer.Navigator>
+
+      </NavigationContainer>
+
+    )
+  };
 }
