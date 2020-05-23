@@ -14,7 +14,7 @@ export default class App extends Component {
     return (
       <View>
         <RNCamera style={{width:'100%', height: '100%'}}
-          onBarCodeRead={() => alert("ola")}
+          onBarCodeRead={(code) => alert(code.data)}
         
         />
       </View>
