@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
 import home from './pages/home'
+import scanCode from './pages/scanCode'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from "@react-navigation/stack";
@@ -20,6 +21,7 @@ function homeRoute({ navigation }) {
 
     <Stack.Navigator >
       <Stack.Screen name="home" component={home} options={{ headerShown: false }} />
+      <Stack.Screen name="scanear" component={scanCode} options={{ headerShown: false }} />
     </Stack.Navigator>
 
   )
