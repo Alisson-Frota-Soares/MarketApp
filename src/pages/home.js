@@ -109,12 +109,18 @@ export default class home extends Component {
                     </View>
                     : null
                 }
+
+
                 <View style={{ flex: 1, justifyContent:"center", alignItems:"center" }} >
                     <Image source={ item.image} style={{height:50,width:50}}  />
                 </View>
+
+
+
+
                 <View style={{ flex: 2, justifyContent:"space-between" }}>
-                    <Text>{item.produto}</Text>
-                    <Text>{item.caracteristicas}</Text>
+                    <Text style={{fontWeight:"bold", fontSize:16, color:"#555"}}>{item.produto}</Text>
+                    <Text style={{color:"#555"}}>{item.marca}</Text>
                     <View style={{ flexDirection: "row", justifyContent:"flex-start" }}>
 
                         <TouchableOpacity
@@ -138,7 +144,7 @@ export default class home extends Component {
                 </View>
 
                 <View style={{ flex: 0.5 }}>
-                    <Text>{item.preco}€</Text>
+                    <Text style={[styles.txtHeader,{fontSize:16}]}>{item.preco * item.quantidade}€</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -277,6 +283,7 @@ const styles = StyleSheet.create({
     },
     quantView: {
         borderWidth: 1,
+        borderColor:"#ccc",
         height:45,
         width:60,
         justifyContent: "center",
