@@ -5,6 +5,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     FlatList,
+    Image
 } from 'react-native';
 
 import { Header, Left, Right, Body, Title, Radio } from "native-base";
@@ -25,27 +26,27 @@ export default class home extends Component {
                     caracteristicas: [],
                     preco: 1,
                     quantidade: 1,
-                    image: null,
+                    image: {uri:"https://www.recheio.pt/catalogo/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/8/0/80908_4.png"},
                     selected: false
                 },
                 {
                     produto: "banana",
-                    marca: "italac",
+                    marca: "banana tem marca?",
                     id: "33223",
                     caracteristicas: [],
                     preco: 1,
                     quantidade: 1,
-                    image: null,
+                    image: {uri:"https://oxfam.org.br/wp-content/uploads/2019/08/banana-terra-1024x1024.png"},
                     selected: false
                 },
                 {
                     produto: "biscoito",
-                    marca: "italac",
+                    marca: "passatempo",
                     id: "33",
                     caracteristicas: [],
                     preco: 1,
                     quantidade: 1,
-                    image: null,
+                    image: {uri:"https://static.wixstatic.com/media/794a04_ceafc9aaabde400ea3e2a1826caba6be~mv2.png/v1/fill/w_238,h_238,al_c,q_85,usm_0.66_1.00_0.01/794a04_ceafc9aaabde400ea3e2a1826caba6be~mv2.webp"},
                     selected: false
                 },
                 {
@@ -55,7 +56,7 @@ export default class home extends Component {
                     caracteristicas: [],
                     preco: 1,
                     quantidade: 1,
-                    image: null,
+                    image: {uri:"https://7bellotas.com/426-large_default/longaniza-iberica.jpg"},
                     selected: false
                 }
             ],
@@ -66,7 +67,7 @@ export default class home extends Component {
     card(item, index) {
 
         return (
-            <TouchableOpacity style={!item.selected ? { flexDirection: "row", justifyContent: "space-between", borderBottomWidth: 1 } : { flexDirection: "row", justifyContent: "space-between", backgroundColor: "#abd4de", borderBottomWidth: 1 }}
+            <TouchableOpacity style={!item.selected ? styles.card : [styles.card, { backgroundColor: "#abd4de" }]}
                 onLongPress={() => {
 
                     item.selected = item.selected ? false : true
@@ -82,11 +83,13 @@ export default class home extends Component {
 
                     }
                 }}
+
+                activeOpacity={0.7}
             >
 
 
                 {this.state.isSelecting ?
-                    <View style={{flex: 0.5, justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
 
 
 
@@ -106,18 +109,18 @@ export default class home extends Component {
                     </View>
                     : null
                 }
-                <View style={{ flex: 1 }} >
-                    {//imagem
-                    }
+                <View style={{ flex: 1, justifyContent:"center", alignItems:"center" }} >
+                    <Image source={ item.image} style={{height:50,width:50}}  />
                 </View>
-                <View style={{ flex: 2 }}>
+                <View style={{ flex: 2, justifyContent:"space-between" }}>
                     <Text>{item.produto}</Text>
                     <Text>{item.caracteristicas}</Text>
-                    <View style={{ flexDirection: "row" }}>
+                    <View style={{ flexDirection: "row", justifyContent:"flex-start" }}>
 
                         <TouchableOpacity
                             style={styles.btnsMoreLess}
                             onPress={() => { item.quantidade++; this.forceUpdate() }}
+                            activeOpacity={0.7}                        
                         >
                             <Text style={styles.TextMoreLess}>+</Text>
                         </TouchableOpacity>
@@ -126,7 +129,8 @@ export default class home extends Component {
 
                         <TouchableOpacity
                             style={styles.btnsMoreLess}
-                            onPress={() => { if(item.quantidade > 1){item.quantidade--; this.forceUpdate()} }}                            
+                            onPress={() => { if (item.quantidade > 1) { item.quantidade--; this.forceUpdate() } }}
+                            activeOpacity={0.7}                        
                         >
                             <Text style={styles.TextMoreLess}>-</Text>
                         </TouchableOpacity>
@@ -232,7 +236,7 @@ export default class home extends Component {
 
 const styles = StyleSheet.create({
     Header: {
-        backgroundColor: "#e0e0e0",
+        backgroundColor: "#eee",
         justifyContent: "space-between"
     },
     left: {
@@ -260,7 +264,9 @@ const styles = StyleSheet.create({
     },
     btnsMoreLess: {
         backgroundColor: "#0088a9",
-        flex: 1,
+        //flex: 1,
+        width:45,
+        height:45,
         justifyContent: "center",
         alignItems: "center"
     },
@@ -271,9 +277,18 @@ const styles = StyleSheet.create({
     },
     quantView: {
         borderWidth: 1,
-        flex: 1,
+        height:45,
+        width:60,
         justifyContent: "center",
         alignItems: "center"
+    },
+    card: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        borderBottomWidth: 1,
+        borderColor:"#ccc",
+        minHeight: 100,
+        backgroundColor: "#f9f9f9",
     }
 
 });
