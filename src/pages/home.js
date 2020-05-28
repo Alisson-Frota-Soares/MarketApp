@@ -23,40 +23,46 @@ export default class home extends Component {
                     produto: "leite",
                     marca: "italac",
                     id: "231434",
-                    caracteristicas: [],
+                    caracteristicas: [
+                        "500",
+                        "ml"
+                    ],
                     preco: 1,
                     quantidade: 1,
-                    image: {uri:"https://www.recheio.pt/catalogo/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/8/0/80908_4.png"},
+                    image: { uri: "https://www.recheio.pt/catalogo/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/8/0/80908_4.png" },
                     selected: false
                 },
                 {
                     produto: "banana",
                     marca: "banana tem marca?",
                     id: "33223",
-                    caracteristicas: [],
+                    caracteristicas: [
+                        "250",
+                        "g"
+                    ],
                     preco: 1,
                     quantidade: 1,
-                    image: {uri:"https://oxfam.org.br/wp-content/uploads/2019/08/banana-terra-1024x1024.png"},
+                    image: { uri: "https://oxfam.org.br/wp-content/uploads/2019/08/banana-terra-1024x1024.png" },
                     selected: false
                 },
                 {
                     produto: "biscoito",
                     marca: "passatempo",
                     id: "33",
-                    caracteristicas: [],
+                    caracteristicas: ["200","g"],
                     preco: 1,
                     quantidade: 1,
-                    image: {uri:"https://static.wixstatic.com/media/794a04_ceafc9aaabde400ea3e2a1826caba6be~mv2.png/v1/fill/w_238,h_238,al_c,q_85,usm_0.66_1.00_0.01/794a04_ceafc9aaabde400ea3e2a1826caba6be~mv2.webp"},
+                    image: { uri: "https://static.wixstatic.com/media/794a04_ceafc9aaabde400ea3e2a1826caba6be~mv2.png/v1/fill/w_238,h_238,al_c,q_85,usm_0.66_1.00_0.01/794a04_ceafc9aaabde400ea3e2a1826caba6be~mv2.webp" },
                     selected: false
                 },
                 {
                     produto: "choriço",
                     marca: "italac",
                     id: "223",
-                    caracteristicas: [],
+                    caracteristicas: ["300","g"],
                     preco: 1,
                     quantidade: 1,
-                    image: {uri:"https://7bellotas.com/426-large_default/longaniza-iberica.jpg"},
+                    image: { uri: "https://7bellotas.com/426-large_default/longaniza-iberica.jpg" },
                     selected: false
                 }
             ],
@@ -111,22 +117,23 @@ export default class home extends Component {
                 }
 
 
-                <View style={{ flex: 1, justifyContent:"center", alignItems:"center" }} >
-                    <Image source={ item.image} style={{height:50,width:50}}  />
+                <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }} >
+                    <Image source={item.image} style={{ height: 50, width: 50 }} />
                 </View>
 
 
 
 
-                <View style={{ flex: 2, justifyContent:"space-between" }}>
-                    <Text style={{fontWeight:"bold", fontSize:16, color:"#555"}}>{item.produto}</Text>
-                    <Text style={{color:"#555"}}>{item.marca}</Text>
-                    <View style={{ flexDirection: "row", justifyContent:"flex-start" }}>
+                <View style={{ flex: 2, justifyContent: "space-between" }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 16, color: "#555", marginBottom:3 }}>{item.produto}</Text>
+                    <Text style={{ color: "#555", marginBottom:3 }}>{item.marca}</Text>
+                    <Text style={{ color: "#555", marginBottom:3 }}>{item.caracteristicas[0]+item.caracteristicas[1]}</Text>
+                    <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
 
                         <TouchableOpacity
                             style={styles.btnsMoreLess}
                             onPress={() => { item.quantidade++; this.forceUpdate() }}
-                            activeOpacity={0.7}                        
+                            activeOpacity={0.7}
                         >
                             <Text style={styles.TextMoreLess}>+</Text>
                         </TouchableOpacity>
@@ -136,7 +143,7 @@ export default class home extends Component {
                         <TouchableOpacity
                             style={styles.btnsMoreLess}
                             onPress={() => { if (item.quantidade > 1) { item.quantidade--; this.forceUpdate() } }}
-                            activeOpacity={0.7}                        
+                            activeOpacity={0.7}
                         >
                             <Text style={styles.TextMoreLess}>-</Text>
                         </TouchableOpacity>
@@ -144,7 +151,8 @@ export default class home extends Component {
                 </View>
 
                 <View style={{ flex: 0.5 }}>
-                    <Text style={[styles.txtHeader,{fontSize:16}]}>{item.preco * item.quantidade}€</Text>
+                    <Text style={[styles.txtHeader, { fontSize: 16 }]}>{item.preco * item.quantidade}€</Text>
+                    <Text style={[styles.txtHeader, { fontSize: 14 }]}>{item.quantidade > 1 ? item.quantidade + "X " + item.preco + "€" : null}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -271,8 +279,8 @@ const styles = StyleSheet.create({
     btnsMoreLess: {
         backgroundColor: "#0088a9",
         //flex: 1,
-        width:45,
-        height:45,
+        width: 45,
+        height: 45,
         justifyContent: "center",
         alignItems: "center"
     },
@@ -283,9 +291,9 @@ const styles = StyleSheet.create({
     },
     quantView: {
         borderWidth: 1,
-        borderColor:"#ccc",
-        height:45,
-        width:60,
+        borderColor: "#ccc",
+        height: 45,
+        width: 60,
         justifyContent: "center",
         alignItems: "center"
     },
@@ -293,7 +301,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         borderBottomWidth: 1,
-        borderColor:"#ccc",
+        borderColor: "#ccc",
         minHeight: 100,
         backgroundColor: "#f9f9f9",
     }
