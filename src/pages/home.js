@@ -27,7 +27,7 @@ export default class home extends Component {
                         "500",
                         "ml"
                     ],
-                    preco: 1,
+                    preco: 0.99,
                     quantidade: 1,
                     image: { uri: "https://www.recheio.pt/catalogo/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/8/0/80908_4.png" },
                     selected: false
@@ -40,7 +40,7 @@ export default class home extends Component {
                         "250",
                         "g"
                     ],
-                    preco: 1,
+                    preco: 0.44,
                     quantidade: 1,
                     image: { uri: "https://oxfam.org.br/wp-content/uploads/2019/08/banana-terra-1024x1024.png" },
                     selected: false
@@ -49,8 +49,8 @@ export default class home extends Component {
                     produto: "biscoito",
                     marca: "passatempo",
                     id: "33",
-                    caracteristicas: ["200","g"],
-                    preco: 1,
+                    caracteristicas: ["200", "g"],
+                    preco: 1.13,
                     quantidade: 1,
                     image: { uri: "https://static.wixstatic.com/media/794a04_ceafc9aaabde400ea3e2a1826caba6be~mv2.png/v1/fill/w_238,h_238,al_c,q_85,usm_0.66_1.00_0.01/794a04_ceafc9aaabde400ea3e2a1826caba6be~mv2.webp" },
                     selected: false
@@ -59,8 +59,8 @@ export default class home extends Component {
                     produto: "choriço",
                     marca: "italac",
                     id: "223",
-                    caracteristicas: ["300","g"],
-                    preco: 1,
+                    caracteristicas: ["300", "g"],
+                    preco: 0.66,
                     quantidade: 1,
                     image: { uri: "https://7bellotas.com/426-large_default/longaniza-iberica.jpg" },
                     selected: false
@@ -125,9 +125,9 @@ export default class home extends Component {
 
 
                 <View style={{ flex: 2, justifyContent: "space-between" }}>
-                    <Text style={{ fontWeight: "bold", fontSize: 16, color: "#555", marginBottom:3 }}>{item.produto}</Text>
-                    <Text style={{ color: "#555", marginBottom:3 }}>{item.marca}</Text>
-                    <Text style={{ color: "#555", marginBottom:3 }}>{item.caracteristicas[0]+item.caracteristicas[1]}</Text>
+                    <Text style={{ fontWeight: "bold", fontSize: 16, color: "#555", marginBottom: 3 }}>{item.produto}</Text>
+                    <Text style={{ color: "#555", marginBottom: 3 }}>{item.marca}</Text>
+                    <Text style={{ color: "#555", marginBottom: 3 }}>{item.caracteristicas[0] + item.caracteristicas[1]}</Text>
                     <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
 
                         <TouchableOpacity
@@ -150,9 +150,9 @@ export default class home extends Component {
                     </View>
                 </View>
 
-                <View style={{ flex: 0.5 }}>
-                    <Text style={[styles.txtHeader, { fontSize: 16 }]}>{item.preco * item.quantidade}€</Text>
-                    <Text style={[styles.txtHeader, { fontSize: 14 }]}>{item.quantidade > 1 ? item.quantidade + "X " + item.preco + "€" : null}</Text>
+                <View style={{ flex: 0.8 }}>
+                    <Text style={[styles.txtHeader, { fontSize: 16, textAlign: "right", width: "100%" }]}>{(item.preco * item.quantidade).toFixed(2)}€</Text>
+                    <Text style={[styles.txtHeader, { fontSize: 12.5, textAlign: "right", width: "100%" }]}>{item.quantidade > 1 ? item.quantidade + "X " + item.preco + "€" : null}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -163,7 +163,12 @@ export default class home extends Component {
         if (this.state.isSelecting == true) {
 
             return (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+
+                    this.removerProdutos();
+
+                }}
+                >
                     <IconIonicons name="md-trash" size={30} color="#0088a9" />
                 </TouchableOpacity>
             )
@@ -198,6 +203,30 @@ export default class home extends Component {
         } else {
             this.setState({ isSelecting: false })
         }
+
+    }
+
+    removerProdutos() {
+
+        let array = this.state.produtos
+
+        
+        for (let index = array.length - 1; index >= 0 ; index--) {
+            
+            if (array[index].selected === true) {
+                array.splice(index,1)
+                //console.warn("remover: "+ array[index].produto)
+            }else{
+                //console.warn(" NAO remover: "+ array[index].produto)
+            }
+            
+        }
+
+
+        this.setState({ produtos: array })
+
+
+        this.setState({ isSelecting: false })
 
     }
 
@@ -237,7 +266,7 @@ export default class home extends Component {
 
 
 
-                <TouchableOpacity activeOpacity={0.5} style={styles.floatButton}
+                <TouchableOpacity activeOpacity={0.7} style={styles.floatButton}
                     onPress={() => this.props.navigation.navigate("scanear")}
                 >
                     <IconIonicons name="ios-barcode" size={35} color="#fff" />
