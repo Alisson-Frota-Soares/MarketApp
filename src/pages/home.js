@@ -210,16 +210,14 @@ export default class home extends Component {
 
         let array = this.state.produtos
 
-        
-        for (let index = array.length - 1; index >= 0 ; index--) {
-            
+
+        for (let index = array.length - 1; index >= 0; index--) {
+
             if (array[index].selected === true) {
-                array.splice(index,1)
-                //console.warn("remover: "+ array[index].produto)
-            }else{
-                //console.warn(" NAO remover: "+ array[index].produto)
+                array.splice(index, 1)
+
             }
-            
+
         }
 
 
@@ -227,6 +225,23 @@ export default class home extends Component {
 
 
         this.setState({ isSelecting: false })
+
+    }
+
+
+    calcularTotal() {
+
+        let total = 0
+
+        this.state.produtos.forEach(element => {
+
+            total += element.preco * element.quantidade
+
+        })
+
+        return total.toFixed(2)
+
+
 
     }
 
@@ -245,7 +260,7 @@ export default class home extends Component {
                     </Left>
                     <Body style={{ flex: 1 }}>
                         <Title style={styles.txtHeader}>
-                            00€
+                            {this.calcularTotal()}€
                         </Title>
                     </Body>
                     <Right style={{ flex: 1 }}>
