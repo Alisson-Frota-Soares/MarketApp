@@ -15,6 +15,10 @@ App em react-native para "bipar" os produtos da loja e poupar tempo no caixa e d
     - [ ] opção para digitar o numero do código manualmente
 - [x] procurar o item bipado no servidor/json local
 - [x] adicionar o item encontrado na lista de produtos
+- [ ] finalizar compra
+    - [ ] enviar lista com os produtos bipados para o json
+    - [ ] gerar um codigo de barras com o endereço desta lista
+    - [ ] se a finalização da comprar for cancelada, apagar a lista do json
 
 ## Versões adaptadas do app para criar aos seguintes bancos de dados 
 - [ ] mySQL
