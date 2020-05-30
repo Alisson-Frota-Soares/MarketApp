@@ -17,8 +17,15 @@ export default class scanCode extends Component {
         };
     }
 
-    componentDidMount() {
-
+    onBarCodeRead(code) {
+        this.tocarBeep()
+        const {params} = this.props.route        
+        
+        
+        params.returnData(code.data);
+        this.props.navigation.goBack()
+        
+        
     }
 
     tocarBeep() {
@@ -84,7 +91,11 @@ export default class scanCode extends Component {
 
                 <RNCamera style={styles.cameraView}
 
-                    onBarCodeRead={(code) => this.tocarBeep()}
+                    onBarCodeRead={(code) => {
+                        
+                        this.onBarCodeRead(code)
+                        
+                    }}
                 />
 
                 <View style={styles.mask}>
@@ -93,14 +104,14 @@ export default class scanCode extends Component {
                         <View style={styles.maskMSides}></View>
 
                         <View style={styles.maskMM}>
-                            <View style={{justifyContent:"space-between"}}>
-                                <View style={[styles.square, {borderTopWidth:3, borderLeftWidth:3 ,borderColor:"#fff"}]} />
-                                <View style={[styles.square, {borderLeftWidth:3,borderBottomWidth: 3,borderColor:"#fff"}]} />
+                            <View style={{ justifyContent: "space-between" }}>
+                                <View style={[styles.square, { borderTopWidth: 3, borderLeftWidth: 3, borderColor: "#fff" }]} />
+                                <View style={[styles.square, { borderLeftWidth: 3, borderBottomWidth: 3, borderColor: "#fff" }]} />
                             </View>
 
-                            <View style={{justifyContent:"space-between"}}>
-                                <View style={[styles.square, {borderTopWidth:3, borderRightWidth:3 ,borderColor:"#fff"}]} />
-                                <View style={[styles.square, {borderRightWidth:3, borderBottomWidth:3 ,borderColor:"#fff"}]} />
+                            <View style={{ justifyContent: "space-between" }}>
+                                <View style={[styles.square, { borderTopWidth: 3, borderRightWidth: 3, borderColor: "#fff" }]} />
+                                <View style={[styles.square, { borderRightWidth: 3, borderBottomWidth: 3, borderColor: "#fff" }]} />
                             </View>
 
                         </View>
