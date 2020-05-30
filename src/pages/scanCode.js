@@ -14,16 +14,23 @@ export default class scanCode extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isScanning:false
         };
     }
 
+    componentDidMount(){
+        this.setState({isScanning:false})
+    }
+
     onBarCodeRead(code) {
+        this.setState({isScanning:true})
         this.tocarBeep()
         const {params} = this.props.route        
         
         
-        params.returnData(code.data);
+        params.returnData("alert", code.data);
         this.props.navigation.goBack()
+        
         
         
     }
@@ -92,8 +99,9 @@ export default class scanCode extends Component {
                 <RNCamera style={styles.cameraView}
 
                     onBarCodeRead={(code) => {
-                        
-                        this.onBarCodeRead(code)
+                        !this.state.isScanning?
+                        this.onBarCodeRead(code):
+                        null
                         
                     }}
                 />
