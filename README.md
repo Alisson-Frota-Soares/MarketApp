@@ -15,7 +15,7 @@ App em react-native para "bipar" os produtos da loja e poupar tempo no caixa e d
 - [ ]procurar o item bipado no servidor/json local
 - [ ]adcionar o item encontrado na lista de produtos
 
-#Versões adaptadas do app para criar aos seguintes bancos de dados 
+## Versões adaptadas do app para criar aos seguintes bancos de dados 
 - [ ]mySQL
 - [ ]Node
 - [ ]firebase
