@@ -1,7 +1,7 @@
 const produtos = [{
     produto: "leite",
     marca: "italac",
-    id: "231434",
+    id: "8717644799512",
     caracteristicas: [
         "500",
         "ml"
@@ -14,7 +14,7 @@ const produtos = [{
 {
     produto: "banana",
     marca: "banana tem marca?",
-    id: "33223",
+    id: 232123,
     caracteristicas: [
         "250",
         "g"

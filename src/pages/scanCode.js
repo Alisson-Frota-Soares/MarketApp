@@ -28,7 +28,7 @@ export default class scanCode extends Component {
         const {params} = this.props.route        
         
         
-        params.returnData("alert", code.data);
+        params.returnData(code.data);
         this.props.navigation.goBack()
         
         

@@ -13,8 +13,8 @@ App em react-native para "bipar" os produtos da loja e poupar tempo no caixa e d
     - [x] scanear o código
     - [x] mandar codigo para tela anterior para procurar o item no servidor
     - [ ] opção para digitar o numero do código manualmente
-- [ ] procurar o item bipado no servidor/json local
-- [ ] adcionar o item encontrado na lista de produtos
+- [x] procurar o item bipado no servidor/json local
+- [x] adicionar o item encontrado na lista de produtos
 
 ## Versões adaptadas do app para criar aos seguintes bancos de dados 
 - [ ] mySQL

@@ -5,7 +5,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     FlatList,
-    Image
+    Image,
+    Alert
 } from 'react-native';
 
 import { Header, Left, Right, Body, Title, Radio } from "native-base";
@@ -19,15 +20,53 @@ import produtosData from '../produtos'
 export default class home extends Component {
     constructor(props) {
         super(props);
-        this.returnData.bind(this)
+        this.procurarProduto.bind(this)
         this.state = {
-            produtos: produtosData,
+            produtos: [],
             isSelecting: false
         };
     }
-    returnData = (id, name) => {
+    procurarProduto = (id) => {
+
+
+        let produtoEncontrado = false
+
+        produtosData.forEach((element, index) => {
+            if (element.id == id) {
+                produtoEncontrado = index
+            }
+        })
+
         
-        alert(name,id)
+        if ( typeof(produtoEncontrado) === "number") {
+
+            let isOnList = false
+
+            this.state.produtos.forEach((element, index) => {
+                if (element.id == id) {
+                    isOnList = index
+                }
+            })
+
+            
+
+            if (typeof( isOnList) === "number" ) {
+                this.state.produtos[isOnList].quantidade++
+
+                this.forceUpdate()
+            }else{
+                this.state.produtos.push(produtosData[produtoEncontrado])
+                this.forceUpdate()
+            }
+
+
+        } else {
+            Alert.alert("produto nao encontrado", "produto nao encotrado, pode ser que este produto nao pertença a este estabelecimento")
+        }
+
+
+
+
 
     }
 
@@ -243,7 +282,7 @@ export default class home extends Component {
 
 
                 <TouchableOpacity activeOpacity={0.7} style={styles.floatButton}
-                    onPress={() => this.props.navigation.navigate('scanear',{returnData: this.returnData.bind(this)})}
+                    onPress={() => this.props.navigation.navigate('scanear', { returnData: this.procurarProduto.bind(this) })}
                 >
                     <IconIonicons name="ios-barcode" size={35} color="#fff" />
                 </TouchableOpacity>
