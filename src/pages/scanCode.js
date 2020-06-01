@@ -25,7 +25,9 @@ export default class scanCode extends Component {
     onBarCodeRead(code) {
         this.setState({isScanning:true})
         this.tocarBeep()
-        const {params} = this.props.route        
+        const {params} = this.props.route
+        
+        console.warn(code.type)
         
         
         params.returnData(code.data);

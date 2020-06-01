@@ -14,7 +14,7 @@ const produtos = [{
 {
     produto: "banana",
     marca: "banana tem marca?",
-    id: 232123,
+    id: 5601227012439,
     caracteristicas: [
         "250",
         "g"

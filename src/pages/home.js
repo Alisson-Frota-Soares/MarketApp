@@ -14,6 +14,12 @@ import { Header, Left, Right, Body, Title, Radio } from "native-base";
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconIonicons from 'react-native-vector-icons/Ionicons'
 
+//import Barcode from "react-native-barcode-builder";
+//<Barcode value="8717644799512" format="CODE128" />
+
+import {Barcode, Formats} from 'react-native-1d-barcodes'
+
+
 import produtosData from '../produtos'
 
 
@@ -28,6 +34,9 @@ export default class home extends Component {
     }
     procurarProduto = (id) => {
 
+        
+
+        console.warn(produtosData)
 
         let produtoEncontrado = false
 
@@ -49,15 +58,18 @@ export default class home extends Component {
             })
 
             
-
+            
             if (typeof( isOnList) === "number" ) {
                 this.state.produtos[isOnList].quantidade++
 
+                
                 this.forceUpdate()
             }else{
                 this.state.produtos.push(produtosData[produtoEncontrado])
                 this.forceUpdate()
             }
+
+            console.warn(produtosData)
 
 
         } else {
@@ -271,6 +283,7 @@ export default class home extends Component {
 
                     </Right>
                 </Header>
+                
 
 
                 <FlatList
