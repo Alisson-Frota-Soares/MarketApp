@@ -15,9 +15,8 @@ import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconIonicons from 'react-native-vector-icons/Ionicons'
 
 //import Barcode from "react-native-barcode-builder";
-//<Barcode value="8717644799512" format="CODE128" />
+//<Barcode value="8717644799512" format="" />
 
-import {Barcode, Formats} from 'react-native-1d-barcodes'
 
 
 import produtosData from '../produtos'
