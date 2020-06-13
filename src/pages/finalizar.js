@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
+
+import Barcode from 'react-native-barcode-builder'
+
 export default class finalizar extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +14,7 @@ export default class finalizar extends Component {
   render() {
     return (
       <View>
-        <Text> finalizar </Text>
+        <Barcode value="8717644799512" format="CODE128" />
       </View>
     );
   }

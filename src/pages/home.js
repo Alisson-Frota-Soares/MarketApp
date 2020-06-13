@@ -14,8 +14,6 @@ import { Header, Left, Right, Body, Title, Radio } from "native-base";
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconIonicons from 'react-native-vector-icons/Ionicons'
 
-//import Barcode from "react-native-barcode-builder";
-//<Barcode value="8717644799512" format="" />
 
 
 
@@ -169,7 +167,7 @@ export default class home extends Component {
         )
     }
 
-    leftHeader() {
+    rightHeader() {
 
         if (this.state.isSelecting == true) {
 
@@ -187,7 +185,9 @@ export default class home extends Component {
 
         } else if (!this.state.produtos.length == 0) {
             return (
-                <TouchableOpacity style={styles.Left} >
+                <TouchableOpacity style={styles.Left}
+                    onPress={()=> {this.props.navigation.navigate("finalizar")}}
+                >
                     <Title style={[styles.txtHeader, { fontSize: 18 }]}>
                         FINALIZAR
                     </Title>
@@ -276,7 +276,7 @@ export default class home extends Component {
                     </Body>
                     <Right style={{ flex: 1 }}>
                         {
-                            this.leftHeader()
+                            this.rightHeader()
                         }
 
 

@@ -3,9 +3,11 @@ import { View, Text } from 'react-native';
 
 import home from './pages/home'
 import scanCode from './pages/scanCode'
+import finalizar from './pages/finalizar'
+
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 
@@ -20,12 +22,15 @@ function homeRoute({ navigation }) {
   return (
 
     <Stack.Navigator >
-      <Stack.Screen name="home" component={home} options={{ headerShown: false }} />
-      <Stack.Screen name="scanear" component={scanCode} options={{ headerShown: false }} />
+      <Stack.Screen name="home" component={home} options={{ headerShown: false,  }} />
+      <Stack.Screen name="scanear" component={scanCode} options={{ headerShown: false, }} />
+      <Stack.Screen name="finalizar" component={finalizar} options={{ headerShown: false }} />
+      
     </Stack.Navigator>
 
   )
 }
+
 
 
 export default class App extends Component {
