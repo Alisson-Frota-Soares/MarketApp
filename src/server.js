@@ -1,4 +1,11 @@
 import data from './produtos'
+import carrinhos from './carrinhos'
+import crypto from 'crypto-js'
+
+const user = {
+    id: "1234"
+}
+
 
 class gerarProduto {
     constructor(produto) {
@@ -7,17 +14,63 @@ class gerarProduto {
         this.id = produto.id
         this.caracteristicas = produto.caracteristicas
         this.preco = produto.preco
-        this.quantidade = produto.quantidade
+        this.quantidade = 1
         this.image = produto.image
         this.selected = false
+    }
+
+}
+
+class gerarCarrinho {
+    constructor(carrinho){
+        this.itens = this.gerarItens(carrinho)
+        this.id = this.gerarId()
+    }
+
+    gerarItens(carrinho){
+        let itens = [];
+        carrinho.forEach((element) => {
+            itens.push({id: element.id, quantidade: element.quantidade})
+        })
+
+        return itens;
+
+    }
+
+    gerarId(){
+        let id = crypto.SHA1(user.id).toString()
+        id = id.slice(0,13)
+        console.warn(id)
+        return id
     }
 }
 
 
 export default class server {
     constructor() {
-        this.procurarProduto()
+        
     }
+
+
+    finalizarCompra(carrinho, length) {
+        
+        if (length) {
+            let newCarrinho = new gerarCarrinho(carrinho)
+
+            let index = carrinhos.push(newCarrinho)
+        
+            return ({sucess:true, id:newCarrinho.id, index: index-1})
+            
+        } else {
+            return ({sucess:false,msg:"carrinho vazio"})
+        }
+        
+
+
+
+
+    }
+
 
 
 

@@ -99,7 +99,9 @@ export default class scanCode extends Component {
             <View style={{ flex: 1 }}>
 
                 <RNCamera style={styles.cameraView}
-
+                    
+                    
+                    focusable={true}
                     onBarCodeRead={(code) => {
                         !this.state.isScanning?
                         this.onBarCodeRead(code):

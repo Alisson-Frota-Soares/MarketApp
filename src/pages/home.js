@@ -31,7 +31,7 @@ export default class home extends Component {
         };
     }
     addProduto = (id) => {
-
+        
         //request ao servidor        
         let response = servidor.procurarProduto(id,this.state.carrinho)
         
@@ -61,6 +61,20 @@ export default class home extends Component {
 
 
     }
+
+    finalizarCompra(){
+        
+        let response = servidor.finalizarCompra(this.state.carrinho, this.state.carrinho.length)
+
+        if (response.sucess) {
+            this.props.navigation.navigate("finalizar", {code:response.id})    
+        } else {
+            Alert.alert(response.msg)
+        }
+
+        
+    }
+
 
 
     card(item, index) {
@@ -170,7 +184,7 @@ export default class home extends Component {
         } else if (!this.state.carrinho.length == 0) {
             return (
                 <TouchableOpacity style={styles.Left}
-                    onPress={()=> {this.props.navigation.navigate("finalizar")}}
+                    onPress={()=> this.finalizarCompra()}
                 >
                     <Title style={[styles.txtHeader, { fontSize: 18 }]}>
                         FINALIZAR
