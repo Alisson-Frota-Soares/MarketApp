@@ -23,9 +23,6 @@ export default class finalizar extends Component {
     };
   }
 
-  barcode(){
-    return <Barcode value={this.state.barcode} format="CODE128" background="#fff" flat text={this.state.barcode} />
-  }
 
   componentDidMount() {
     console.warn(carrinhos)
@@ -49,15 +46,20 @@ export default class finalizar extends Component {
 
   }
 
+
+  cancel(){
+    this.props.navigation.goBack()
+  }
+
   render() {
     if (this.state.barcode) {
 
       return (
-        <View>
+        <View style={{flex:1}}>
           <Header androidStatusBarColor="#aaa" style={{ justifyContent: "flex-start", backgroundColor: "#eee", }}>
 
             <Left>
-              <TouchableOpacity >
+              <TouchableOpacity onPress={() => this.cancel()} >
                 <Text style={styles.txt}>Cancelar</Text>
               </TouchableOpacity>
             </Left>
@@ -65,12 +67,14 @@ export default class finalizar extends Component {
           </Header>
 
           
-          <View style={{flex:1, justifyContent:"center"}}>
-              
+          <View style={{ flexGrow: 1, justifyContent: "center" }}>
+
+            <Barcode value={this.state.barcode} format="CODE128" background="#fff" flat text={this.state.barcode} />
+          
           </View>
 
 
-          
+
 
 
 
