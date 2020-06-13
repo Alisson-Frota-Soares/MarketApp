@@ -31,19 +31,19 @@ export default class home extends Component {
         };
     }
     addProduto = (id) => {
-        
+
         //request ao servidor        
-        let response = servidor.procurarProduto(id,this.state.carrinho)
-        
+        let response = servidor.procurarProduto(id, this.state.carrinho)
+
         //verifica se encontrou o produto com sucesso
-        if(response.sucess){
-            
+        if (response.sucess) {
+
             //se o produto ja estiver no carrinho aumenta a quantidade
             if (response.isOnList) {
                 console.warn(response.indexOnLIST)
                 this.state.carrinho[response.indexOnLIST].quantidade++
                 this.forceUpdate()
-            } else if(response.produto) {
+            } else if (response.produto) {
 
                 //se o produto nao estiver no carrinho ele adiciona o produto no carrinho
 
@@ -52,7 +52,7 @@ export default class home extends Component {
             }
 
 
-        }else{
+        } else {
             Alert.alert(response.msg)
         }
 
@@ -62,17 +62,17 @@ export default class home extends Component {
 
     }
 
-    finalizarCompra(){
-        
+    finalizarCompra() {
+
         let response = servidor.finalizarCompra(this.state.carrinho, this.state.carrinho.length)
 
         if (response.sucess) {
-            this.props.navigation.navigate("finalizar", {code:response.id})    
+            this.props.navigation.navigate("finalizar", { code: response.id })
         } else {
             Alert.alert(response.msg)
         }
 
-        
+
     }
 
 
@@ -184,7 +184,7 @@ export default class home extends Component {
         } else if (!this.state.carrinho.length == 0) {
             return (
                 <TouchableOpacity style={styles.Left}
-                    onPress={()=> this.finalizarCompra()}
+                    onPress={() => this.finalizarCompra()}
                 >
                     <Title style={[styles.txtHeader, { fontSize: 18 }]}>
                         FINALIZAR
@@ -254,6 +254,16 @@ export default class home extends Component {
 
     }
 
+    EmptyRender() {
+        return (
+            <View style={{ flex:1 , justifyContent:"center", alignItems:"center"}}>
+                <IconIonicons name="ios-cart" size={50} />
+                <Text style={{textAlign:"center", fontSize:16}} >Clique no botão abaixo para{"\n"}começar sua compra!</Text>
+            </View>
+
+        )
+    }
+
 
 
 
@@ -280,12 +290,14 @@ export default class home extends Component {
 
                     </Right>
                 </Header>
-                
+
 
 
                 <FlatList
+                    contentContainerStyle={{flex:1}}
                     data={this.state.carrinho}
                     renderItem={({ item, index }) => this.card(item, index)}
+                    ListEmptyComponent={this.EmptyRender()}
                     keyExtractor={(item) => item.id}
                 />
 
