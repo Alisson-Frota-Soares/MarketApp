@@ -29,8 +29,11 @@ export default class finalizar extends Component {
 
     const { params } = this.props.route
 
+    //caso nao houver recebido o codigo, volta para tela home
     if (params.code) {
 
+      //verificações para ver se o codigo é valido
+      //e algumas formatações depenendo da condição
       if (typeof (params.code) == "number") {
         this.setState({ barcode: params.code.toString() })
       } else if (typeof (params.code) == "string") {
