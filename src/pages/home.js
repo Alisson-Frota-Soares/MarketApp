@@ -17,7 +17,6 @@ import IconIonicons from 'react-native-vector-icons/Ionicons'
 
 
 
-import produtosData from '../produtos' // remover isso dps que o arquivo server tiver implantado
 import Server from '../server'
 
 const servidor = new Server();
