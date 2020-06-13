@@ -17,60 +17,44 @@ import IconIonicons from 'react-native-vector-icons/Ionicons'
 
 
 
-import produtosData from '../produtos'
+import produtosData from '../produtos' // remover isso dps que o arquivo server tiver implantado
+import Server from '../server'
 
+const servidor = new Server();
 
 export default class home extends Component {
     constructor(props) {
         super(props);
-        this.procurarProduto.bind(this)
+        this.addProduto.bind(this)
         this.state = {
-            produtos: [],
+            carrinho: [],
             isSelecting: false
         };
     }
-    procurarProduto = (id) => {
+    addProduto = (id) => {
 
+        //request ao servidor        
+        let response = servidor.procurarProduto(id,this.state.carrinho)
         
-
-        console.warn(produtosData)
-
-        let produtoEncontrado = false
-
-        produtosData.forEach((element, index) => {
-            if (element.id == id) {
-                produtoEncontrado = index
-            }
-        })
-
-        
-        if ( typeof(produtoEncontrado) === "number") {
-
-            let isOnList = false
-
-            this.state.produtos.forEach((element, index) => {
-                if (element.id == id) {
-                    isOnList = index
-                }
-            })
-
+        //verifica se encontrou o produto com sucesso
+        if(response.sucess){
             
-            
-            if (typeof( isOnList) === "number" ) {
-                this.state.produtos[isOnList].quantidade++
-
-                
+            //se o produto ja estiver no carrinho aumenta a quantidade
+            if (response.isOnList) {
+                console.warn(response.indexOnLIST)
+                this.state.carrinho[response.indexOnLIST].quantidade++
                 this.forceUpdate()
-            }else{
-                this.state.produtos.push(produtosData[produtoEncontrado])
+            } else if(response.produto) {
+
+                //se o produto nao estiver no carrinho ele adiciona o produto no carrinho
+
+                this.state.carrinho.push(response.produto)
                 this.forceUpdate()
             }
 
-            console.warn(produtosData)
 
-
-        } else {
-            Alert.alert("produto nao encontrado", "produto nao encotrado, pode ser que este produto nao pertença a este estabelecimento")
+        }else{
+            Alert.alert(response.msg)
         }
 
 
@@ -78,6 +62,7 @@ export default class home extends Component {
 
 
     }
+
 
     card(item, index) {
 
@@ -183,7 +168,7 @@ export default class home extends Component {
             )
 
 
-        } else if (!this.state.produtos.length == 0) {
+        } else if (!this.state.carrinho.length == 0) {
             return (
                 <TouchableOpacity style={styles.Left}
                     onPress={()=> {this.props.navigation.navigate("finalizar")}}
@@ -201,7 +186,7 @@ export default class home extends Component {
 
         let totalSelected = 0;
 
-        this.state.produtos.forEach(element => {
+        this.state.carrinho.forEach(element => {
             if (element.selected) {
                 totalSelected++;
 
@@ -219,7 +204,7 @@ export default class home extends Component {
 
     removerProdutos() {
 
-        let array = this.state.produtos
+        let array = this.state.carrinho
 
 
         for (let index = array.length - 1; index >= 0; index--) {
@@ -244,7 +229,7 @@ export default class home extends Component {
 
         let total = 0
 
-        this.state.produtos.forEach(element => {
+        this.state.carrinho.forEach(element => {
 
             total += element.preco * element.quantidade
 
@@ -286,7 +271,7 @@ export default class home extends Component {
 
 
                 <FlatList
-                    data={this.state.produtos}
+                    data={this.state.carrinho}
                     renderItem={({ item, index }) => this.card(item, index)}
                     keyExtractor={(item) => item.id}
                 />
@@ -294,7 +279,7 @@ export default class home extends Component {
 
 
                 <TouchableOpacity activeOpacity={0.7} style={styles.floatButton}
-                    onPress={() => this.props.navigation.navigate('scanear', { returnData: this.procurarProduto.bind(this) })}
+                    onPress={() => this.props.navigation.navigate('scanear', { returnData: this.addProduto.bind(this) })}
                 >
                     <IconIonicons name="ios-barcode" size={35} color="#fff" />
                 </TouchableOpacity>
