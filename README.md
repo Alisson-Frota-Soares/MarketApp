@@ -18,7 +18,7 @@ App em react-native para "bipar" os produtos da loja e poupar tempo no caixa e d
 - [ ] finalizar compra
     - [x] enviar lista com os produtos bipados para o json
     - [x] gerar um codigo de barras com o endereço desta lista
-    - [ ] se a finalização da comprar for cancelada, apagar a lista do json
+    - [x] se a finalização da comprar for cancelada, apagar a lista do json
 
 ## Versões adaptadas do app para criar aos seguintes bancos de dados 
 - [ ] mySQL

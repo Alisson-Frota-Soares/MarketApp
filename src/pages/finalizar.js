@@ -4,7 +4,9 @@ import {
   Text,
   ActivityIndicator,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  BackHandler,
+  Alert
 } from 'react-native';
 
 
@@ -19,18 +21,35 @@ export default class finalizar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      barcode: null
+      barcode: null,
+      index: null
     };
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+  
+  handleBackButtonClick() {
+    this.cancel()
+    return true;
+  }
 
   componentDidMount() {
+
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
     console.warn(carrinhos)
 
     const { params } = this.props.route
 
     //caso nao houver recebido o codigo, volta para tela home
     if (params.code) {
+
+      console.warn(params.index)
+      this.setState({ index: params.index })
 
       //verificações para ver se o codigo é valido
       //e algumas formatações depenendo da condição
@@ -50,7 +69,13 @@ export default class finalizar extends Component {
   }
 
 
-  cancel(){
+  cancel() {
+
+    Alert.alert("cancelar")
+    carrinhos.splice(this.state.index, 1)
+    
+
+
     this.props.navigation.goBack()
   }
 
@@ -58,7 +83,7 @@ export default class finalizar extends Component {
     if (this.state.barcode) {
 
       return (
-        <View style={{flex:1}}>
+        <View style={{ flex: 1 }}>
           <Header androidStatusBarColor="#aaa" style={{ justifyContent: "flex-start", backgroundColor: "#eee", }}>
 
             <Left>
@@ -69,11 +94,11 @@ export default class finalizar extends Component {
 
           </Header>
 
-          
+
           <View style={{ flexGrow: 1, justifyContent: "center" }}>
 
             <Barcode value={this.state.barcode} format="CODE128" background="#fff" flat text={this.state.barcode} />
-          
+
           </View>
 
 

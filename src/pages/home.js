@@ -56,7 +56,7 @@ export default class home extends Component {
             Alert.alert(response.msg)
         }
 
-
+        
 
 
 
@@ -72,7 +72,7 @@ export default class home extends Component {
         if (response.sucess) {
             //caso tudo tenha ocorrido com sucesso, vai para tela "finalizar"
             //e mostra o cod de barras da compra, para ser escaneado no caixa do supermercado
-            this.props.navigation.navigate("finalizar", { code: response.id })
+            this.props.navigation.navigate("finalizar", { code: response.id, index: response.index })
         } else {
             Alert.alert(response.msg)
         }
