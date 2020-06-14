@@ -19,7 +19,11 @@ App em react-native para "bipar" os produtos da loja e poupar tempo no caixa e d
     - [x] enviar lista com os produtos bipados para o json
     - [x] gerar um codigo de barras com o endereço desta lista
     - [x] se a finalização da comprar for cancelada, apagar a lista do json
-
+- [ ] LOGIN E LOGOUT
+    - [ ] Instalar firebase login como api de login
+    - [ ] login com email e senha
+    - [ ] login com google
+    - [ ] login com facebook
 ## Versões adaptadas do app para criar aos seguintes bancos de dados 
 - [ ] mySQL
 - [ ] Node
