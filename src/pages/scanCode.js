@@ -19,17 +19,23 @@ export default class scanCode extends Component {
     }
 
     componentDidMount(){
+        //variavel ativada dps que um cod é escaneado
+        //coloquei esta variavel para o leitor só ler uma vez o codigo de barras
+        //caso contraro vai ler o msm cod varias vezes sem parar
         this.setState({isScanning:false})
     }
 
     onBarCodeRead(code) {
+        //funçao ativada quando ler o codigo
+
         this.setState({isScanning:true})
         this.tocarBeep()
+        
         const {params} = this.props.route
         
         console.warn(code.type)
         
-        
+        //esta função retorna o valor do cod para uma função na tela home
         params.returnData(code.data);
         this.props.navigation.goBack()
         

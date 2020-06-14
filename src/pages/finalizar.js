@@ -35,7 +35,7 @@ export default class finalizar extends Component {
       //verificações para ver se o codigo é valido
       //e algumas formatações depenendo da condição
       if (typeof (params.code) == "number") {
-        this.setState({ barcode: params.code.toString() })
+        this.setState({ barcode: params.code.toString() }) //transforma em string se o cod for numeros
       } else if (typeof (params.code) == "string") {
         this.setState({ barcode: params.code })
       } else {

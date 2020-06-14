@@ -64,9 +64,14 @@ export default class home extends Component {
 
     finalizarCompra() {
 
+        //request a uma função no servidor, que tenta finalizar a compra
         let response = servidor.finalizarCompra(this.state.carrinho, this.state.carrinho.length)
 
+
+        //verificação se o servidor conseguiu finalizar a compra ou não
         if (response.sucess) {
+            //caso tudo tenha ocorrido com sucesso, vai para tela "finalizar"
+            //e mostra o cod de barras da compra, para ser escaneado no caixa do supermercado
             this.props.navigation.navigate("finalizar", { code: response.id })
         } else {
             Alert.alert(response.msg)
@@ -197,6 +202,9 @@ export default class home extends Component {
 
     isSelecting() {
 
+        //função que mostra um estado, se o usuario esta ou nao selecionando produtos
+        //selecionar produto para apagar etc
+
         let totalSelected = 0;
 
         this.state.carrinho.forEach(element => {
@@ -240,6 +248,9 @@ export default class home extends Component {
 
     calcularTotal() {
 
+        //calcula o preço total de todos os produtos bipados e
+        //e a respectiva quantidade e mostra para o usuario na 
+        //barra de cima "header"
         let total = 0
 
         this.state.carrinho.forEach(element => {
