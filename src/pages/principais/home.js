@@ -17,7 +17,7 @@ import IconIonicons from 'react-native-vector-icons/Ionicons'
 
 
 
-import Server from '../server'
+import Server from '../../server'
 
 const servidor = new Server();
 

@@ -5,6 +5,9 @@ import home from './pages/principais/home'
 import scanCode from './pages/principais/scanCode'
 import finalizar from './pages/principais/finalizar'
 
+import intro from './pages/login/introducao'
+import login from './pages/login/login'
+
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
