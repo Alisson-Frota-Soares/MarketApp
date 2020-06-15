@@ -41,14 +41,13 @@ export default class finalizar extends Component {
 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
 
-    console.warn(carrinhos)
-
+    
     const { params } = this.props.route
 
     //caso nao houver recebido o codigo, volta para tela home
     if (params.code) {
 
-      console.warn(params.index)
+      
       this.setState({ index: params.index })
 
       //verificações para ver se o codigo é valido
