@@ -13,7 +13,7 @@ import {
 import { Header, Left } from 'native-base'
 
 import Barcode from 'react-native-barcode-builder'
-import carrinhos from '../carrinhos'
+import carrinhos from '../../carrinhos'
 
 
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-import home from './pages/home'
-import scanCode from './pages/scanCode'
-import finalizar from './pages/finalizar'
+import home from './pages/principais/home'
+import scanCode from './pages/principais/scanCode'
+import finalizar from './pages/principais/finalizar'
 
 
 import { NavigationContainer } from '@react-navigation/native';
