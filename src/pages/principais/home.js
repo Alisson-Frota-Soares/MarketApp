@@ -105,7 +105,7 @@ export default class home extends Component {
                         item.selected = item.selected ? false : true
                         this.isSelecting()
                     } else {
-
+                        this.props.navigation.navigate("produtoInfo", {item:item})
                     }
                 }}
 

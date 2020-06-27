@@ -4,6 +4,7 @@ import { View, Text, BackHandler, SafeAreaView, ScrollView } from 'react-native'
 import home from './pages/principais/home'
 import scanCode from './pages/principais/scanCode'
 import finalizar from './pages/principais/finalizar'
+import produtoInfo from './pages/principais/produtoInfo'
 
 import login from './pages/login/login'
 import confirmLogin from './pages/login/confirmLogin'
@@ -29,6 +30,7 @@ function homeRoute({ navigation }) {
       <Stack.Screen name="home" component={home} options={{ headerShown: false, }} />
       <Stack.Screen name="scanear" component={scanCode} options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }} />
       <Stack.Screen name="finalizar" component={finalizar} options={{ headerShown: false }} />
+      <Stack.Screen name="produtoInfo" component={produtoInfo} options={{headerTitle:"informações do produto" }} />
 
     </Stack.Navigator>
 

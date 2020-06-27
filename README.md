@@ -4,11 +4,11 @@ App em react-native para "bipar" os produtos da loja e poupar tempo no caixa e d
 - - - - - 
 ## objetivos
 
-- [ ] cards dos produtos bipados
+- [x] cards dos produtos bipados
     - [x] aumentar e diminuir a quantidade do produto
     - [x] selecionar e apagar produtos
     - [x] calcular o preço conforme a quantidade aumenta ou diminui
-    - [ ] clicar e ir para uma tela com informações do produto
+    - [x] clicar e ir para uma tela com informações do produto
 - [ ] tela de scanear o codigo de barras
     - [x] scanear o código
     - [x] mandar codigo para tela anterior para procurar o item no servidor
