@@ -3,10 +3,15 @@ import {
     View,
     Text,
     StyleSheet,
-    Modal
+    Modal,
+    TouchableOpacity,
+    TextInput,
+    Button,
+
 } from 'react-native';
 
 import { RNCamera } from 'react-native-camera'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 import Sound from 'react-native-sound';
 
@@ -14,33 +19,36 @@ export default class scanCode extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isScanning:false
+            isScanning: false,
+            isModalVisible: false,
+            flashMode: "off",
+            Input: null
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //variavel ativada dps que um cod é escaneado
         //coloquei esta variavel para o leitor só ler uma vez o codigo de barras
         //caso contraro vai ler o msm cod varias vezes sem parar
-        this.setState({isScanning:false})
+        this.setState({ isScanning: false })
     }
 
     onBarCodeRead(code) {
         //funçao ativada quando ler o codigo
 
-        this.setState({isScanning:true})
+        this.setState({ isScanning: true })
         this.tocarBeep()
-        
-        const {params} = this.props.route
-        
+
+        const { params } = this.props.route
+
         console.warn(code.type)
-        
+
         //esta função retorna o valor do cod para uma função na tela home
         params.returnData(code.data);
         this.props.navigation.goBack()
-        
-        
-        
+
+
+
     }
 
     tocarBeep() {
@@ -105,19 +113,30 @@ export default class scanCode extends Component {
             <View style={{ flex: 1 }}>
 
                 <RNCamera style={styles.cameraView}
-                    
-                    
+
+                    flashMode={this.state.flashMode == "on" ? "torch" : "off"}
+                    captureAudio={false}
                     focusable={true}
                     onBarCodeRead={(code) => {
-                        !this.state.isScanning?
-                        this.onBarCodeRead(code):
-                        null
-                        
+                        !this.state.isScanning ?
+                            this.onBarCodeRead(code) :
+                            null
+
                     }}
                 />
 
                 <View style={styles.mask}>
-                    <View style={styles.maskUpDown}></View>
+                    <View style={[styles.maskUpDown, { alignItems: "flex-end" }]}>
+                        <TouchableOpacity style={styles.flash} activeOpacity={0.8} onPress={() => {
+                            if (this.state.flashMode === "off") {
+                                this.setState({ flashMode: "on" })
+                            } else {
+                                this.setState({ flashMode: "off" })
+                            }
+                        }} >
+                            <Icon name={this.state.flashMode === "off" ? "ios-flash-off" : "ios-flash"} size={35} />
+                        </TouchableOpacity>
+                    </View>
                     <View style={styles.maskMiddle}>
                         <View style={styles.maskMSides}></View>
 
@@ -135,8 +154,55 @@ export default class scanCode extends Component {
                         </View>
                         <View style={styles.maskMSides}></View>
                     </View>
-                    <View style={styles.maskUpDown}></View>
+                    <View style={[styles.maskUpDown, { justifyContent: "flex-end" }]}>
+                        <TouchableOpacity style={styles.input} activeOpacity={0.8} onPress={() => this.setState({ isModalVisible: true })} >
+                            <Icon name="ios-barcode" size={35} color="#fff" />
+                            <Text style={{ color: "#fff" }}>Clique para digitar o código manualmente</Text>
+
+                        </TouchableOpacity>
+                    </View>
                 </View>
+
+
+                <Modal transparent visible={this.state.isModalVisible} animated={true} animationType="fade" onRequestClose={() => this.setState({ isModalVisible: false })} >
+                    <TouchableOpacity style={styles.Modal} activeOpacity={1} onPress={() => this.setState({ isModalVisible: false })} >
+                        <View style={{ flex: 1 }} />
+                        <View style={styles.container}>
+                            <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 16 }}>Digite o código do produto, localizado abaico do código de barras</Text>
+
+                            <TextInput
+                                placeholder="Digite o código do produto"
+                                underlineColorAndroid="#aaa"
+                                keyboardType="numeric"
+                                style={{ width: "90%" }}
+                                onChangeText={(t) => this.setState({ Input: t })}
+                                onSubmitEditing={() => {
+
+                                    if (this.state.Input !== null) {
+                                        this.onBarCodeRead(this.state.Input)
+                                        this.setState({ isModalVisible: false })
+                                    } else {
+                                        false
+                                    }
+                                    
+                                        
+                                }}
+                            />
+
+                            <Button title="Pronto" color="#0088a9" onPress={() => {
+                                if (this.state.Input !== null) {
+                                    this.onBarCodeRead(this.state.Input)
+                                    this.setState({ isModalVisible: false })
+                                } else {
+                                    false
+                                }
+                                
+                            }} />
+                        </View>
+                        <View style={{ flex: 1 }} />
+                    </TouchableOpacity>
+
+                </Modal>
 
             </View>
         );
@@ -160,8 +226,7 @@ const styles = StyleSheet.create({
     },
     maskUpDown: {
         flex: 2,
-        backgroundColor: "#000",
-        opacity: 0.5,
+        backgroundColor: "rgba(000,000,000, 0.5)",
 
     },
     maskMiddle: {
@@ -182,6 +247,44 @@ const styles = StyleSheet.create({
     square: {
         width: 50,
         height: 50,
+    },
+    input: {
+        alignSelf: "center",
+        width: "90%",
+        height: 50,
+        backgroundColor: "#0088a9",
+        borderRadius: 5,
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        padding: 5,
+        margin: 10,
+        flexDirection: "row",
+
+    },
+    Modal: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(000,000,000, 0.5)",
+
+    },
+    container: {
+        backgroundColor: "#fff",
+        width: "85%",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10,
+        padding: 20
+
+    },
+    flash: {
+        backgroundColor: "#fff",
+        width: 50,
+        height: 50,
+        borderRadius: 80,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 10
     }
 
 });

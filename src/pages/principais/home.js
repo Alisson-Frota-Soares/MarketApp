@@ -39,6 +39,8 @@ export default class home extends Component {
     }
     addProduto = (id) => {
 
+        
+
         //request ao servidor        
         let response = servidor.procurarProduto(id, this.state.carrinho)
 
@@ -47,7 +49,7 @@ export default class home extends Component {
 
             //se o produto ja estiver no carrinho aumenta a quantidade
             if (response.isOnList) {
-                console.warn(response.indexOnLIST)
+                
                 this.state.carrinho[response.indexOnLIST].quantidade++
                 this.forceUpdate()
             } else if (response.produto) {
