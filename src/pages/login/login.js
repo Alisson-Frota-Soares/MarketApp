@@ -103,6 +103,7 @@ export default class login extends Component {
                     showSkipButton
                     skipLabel="Saltar"
                     nextLabel="Proximo"
+                    doneLabel="Pronto"
 
                 />
             )

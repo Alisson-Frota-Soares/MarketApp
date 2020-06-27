@@ -18,7 +18,7 @@ export default class confirmLogin extends Component {
     }
 
     Confirmar(){
-        this.props.navigation.navigate("home")
+        this.props.navigation.replace("homeDrawer")
     }
 
     render() {
