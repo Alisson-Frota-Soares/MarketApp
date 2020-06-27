@@ -290,7 +290,7 @@ export default class home extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Header androidStatusBarColor="#aaa" style={styles.Header}>
+                <Header androidStatusBarColor="#0088a9" style={styles.Header}>
                     <Left style={{ flex: 1 }}>
                         <TouchableOpacity style={styles.Left} onPress={() => this.props.navigation.openDrawer()}>
                             <IconMaterial name="menu" size={30} />
