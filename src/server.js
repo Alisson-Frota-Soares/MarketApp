@@ -2,6 +2,9 @@ import data from './produtos'
 import carrinhos from './carrinhos'
 import crypto from 'crypto-js'
 
+import firebase from '@react-native-firebase/auth'
+
+
 const user = {
     id: "1234"
 }
@@ -115,6 +118,36 @@ export default class server {
     }
 
 
+
+    signIn = async (phoneNumber) => {
+
+        console.warn(phoneNumber)
+        
+        /*
+
+        try {
+            const sucess = await firebase().signInWithPhoneNumber("+351 965 861 713", true)
+
+            if (sucess) {
+                console.warn(sucess)
+                return ({sucess})
+            }
+
+        } catch (error) {
+            
+            console.warn(error)
+            return ({error})
+        }
+        */
+    }
+
+    confirmCode = async (code) => {
+        try {
+            const sucess = await firebase().verifyPhoneNumber()
+        } catch (error) {
+            
+        }
+    }
 
 
 }

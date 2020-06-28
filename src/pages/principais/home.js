@@ -16,8 +16,10 @@ import IconIonicons from 'react-native-vector-icons/Ionicons'
 
 
 
+
+
+
 import Server from '../../server'
-import { NavigationActions } from 'react-navigation';
 
 const servidor = new Server();
 
@@ -32,8 +34,6 @@ export default class home extends Component {
     }
 
     componentDidMount(){
-
-        
         
         
     }

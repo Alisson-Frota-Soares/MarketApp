@@ -10,6 +10,10 @@ import {
 import { View, Input, Text, Form, Header, Left, Title, Item, Label } from 'native-base'
 import AppIntroSlider from 'react-native-app-intro-slider';
 
+import Server from '../../server'
+
+const servidor = new Server();
+
 const slides = [
     {
         key: 1,
@@ -38,12 +42,25 @@ export default class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showRealApp: false
+            showRealApp: false,
+            Input: null
         };
     }
 
-    Login() {
-        this.props.navigation.navigate("confirmar")
+    Login = async () => {
+        console.warn(typeof(this.state.Input))
+        console.warn(typeof(toString(this.state.Input)))
+
+        const response = await servidor.signIn(toString(this.state.Input))
+
+        if (response.sucess) {
+            this.props.navigation.navigate("confirmar", response.sucess)
+        }else{
+            console.warn(response.error)
+        }
+
+
+        
     }
 
     _renderItem = ({ item }) => {
@@ -83,7 +100,7 @@ export default class login extends Component {
 
                             <Item stackedLabel>
                                 <Label>Numero de telemóvel</Label>
-                                <Input style={styles.Input} keyboardType="phone-pad" onSubmitEditing={() => this.Login()} />
+                                <Input style={styles.Input} keyboardType="phone-pad" onSubmitEditing={() => this.Login()} onChangeText={(e) => this.setState({ Input: e })} />
                             </Item>
 
 
@@ -146,15 +163,15 @@ const styles = StyleSheet.create({
         fontSize: 30,
         textAlign: "center",
         color: "#fff",
-        marginBottom:30
+        marginBottom: 30
     },
     text: {
         textAlign: "center",
         color: "#fff"
     },
-    image:{
-        width:200,
-        height:150,
-        marginBottom:30
+    image: {
+        width: 200,
+        height: 150,
+        marginBottom: 30
     }
 })

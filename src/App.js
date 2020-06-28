@@ -16,6 +16,8 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerI
 import { createSwitchNavigator, createAppContainer } from 'react-navigation'
 
 
+import auth from '@react-native-firebase/auth'
+
 import {
   Drawer,
 } from 'react-native-paper';
@@ -124,7 +126,7 @@ function DrawerNav({ navigation, route }) {
 function switchApp({ navigation }) {
   return (
     <NavigationContainer>
-      <SwitchComp.Navigator initialRouteName="homeDrawer" screenOptions={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} >
+      <SwitchComp.Navigator initialRouteName={auth().currentUser? "homeDrawer" : "login"} screenOptions={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} >
         <SwitchComp.Screen name="login" component={InitialRouteApp} />
         <SwitchComp.Screen name="homeDrawer" component={DrawerNav} />
       </SwitchComp.Navigator>
