@@ -18,24 +18,24 @@ const servidor = new Server();
 const slides = [
     {
         key: 1,
-        title: 'Bem-vindo',
-        text: '',
+        title: 'Bem-vindo a nossa app',
+        text: 'um novo jeito de se fazer compras',
         image: require("../../images/sua-logo.png"),
-        backgroundColor: '#0088a9',
+        backgroundColor: '#2e86c1',
     },
     {
         key: 2,
-        title: 'Title 2',
-        text: 'Other cool stuff',
+        title: 'Não perca mais tempo no caixa',
+        text: 'escaneie os produtos antes de os colocar\nno carrinho de compras ',
         image: null,
-        backgroundColor: '#59b2ab',
+        backgroundColor: '#8cc63e',
     },
     {
         key: 3,
-        title: 'Rocket guy',
-        text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
+        title: 'finalizando a compra',
+        text: 'Depois de ter escaneado tudo\nbasta ir até o caixa, mostrar o código\n de barras gerado na app, pagar, e pronto\ncompra concluida!!!',
         image: null,
-        backgroundColor: '#22bcb5',
+        backgroundColor: '#ec001c',
     }
 ];
 
@@ -96,12 +96,12 @@ export default class login extends Component {
                 <View>
                     <Header style={{ flexDirection: "row", justifyContent: "flex-start", backgroundColor: "#eee" }} androidStatusBarColor="#aaa">
                         <Left>
-                            <Title style={{ color: "#0088a9" }} >Sua Marca</Title>
+                            <Title style={{ color: "#0088a9" }} >Login</Title>
                         </Left>
                     </Header>
 
                     <View  >
-                        <Text style={styles.Title}>Login</Text>
+                        <Text style={styles.Title}>Sua Marca</Text>
 
                         <Text style={[styles.Title, { fontSize: 16, marginBottom: 10, marginTop: 10, fontWeight: "bold" }]}>
                             Insira seu numero de telemovel{"\n"}para aceder a app
