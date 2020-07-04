@@ -44,7 +44,7 @@ function homeRoute({ navigation }) {
       <Stack.Screen name="home" component={home} options={{ headerShown: false, }} />
       <Stack.Screen name="scanear" component={scanCode} options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }} />
       <Stack.Screen name="finalizar" component={finalizar} options={{ headerShown: false }} />
-      <Stack.Screen name="produtoInfo" component={produtoInfo} options={{ headerTitle: "informações do produto" }} />
+      <Stack.Screen name="produtoInfo" component={produtoInfo} options={{ headerShown:false}} />
 
     </Stack.Navigator>
 

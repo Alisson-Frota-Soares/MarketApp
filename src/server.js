@@ -25,37 +25,53 @@ class gerarProduto {
 }
 
 class gerarCarrinho {
-    constructor(carrinho){
+    constructor(carrinho) {
         this.itens = this.gerarItens(carrinho)
         this.id = this.gerarId()
     }
 
-    gerarItens(carrinho){
+    gerarItens(carrinho) {
         let itens = [];
         carrinho.forEach((element) => {
-            itens.push({id: element.id, quantidade: element.quantidade})
+            itens.push({ id: element.id, quantidade: element.quantidade })
         })
 
         return itens;
 
     }
 
-    gerarId(){
-        let id = crypto.SHA1(user.id).toString()
-        id = id.slice(0,13)
-        console.warn(id)
-        return id
+    gerarId() {
+
+        
+
+        let user = auth().currentUser
+        if (user) {
+
+            let id = crypto.enc.Utf8.parse(user.uid).toString()
+            
+            
+            
+
+            //let id = crypto.SHA1(user.uid.slice(0,8)).toString()
+            id = id.slice(0, 13)
+            console.warn(id)
+            return id
+        } else {
+            return ({ error: "sem usuario" })
+        }
+
+
     }
 }
 
 
 export default class server {
     constructor() {
-        
+
     }
 
-    iscurrentUser = async (props) =>{
-        
+    iscurrentUser = async (props) => {
+
         const user = auth().currentUser
 
         if (!user) {
@@ -63,22 +79,28 @@ export default class server {
         } else {
             return user
         }
-        
+
     }
 
     finalizarCompra(carrinho, length) {
-        
+
         if (length) {
             let newCarrinho = new gerarCarrinho(carrinho)
 
-            let index = carrinhos.push(newCarrinho)
-        
-            return ({sucess:true, id:newCarrinho.id, index: index-1})
-            
+            if (newCarrinho.id.error) {
+                return ({ sucess: false, msg: "sem usuario" })
+            } else {
+                let index = carrinhos.push(newCarrinho)
+
+                return ({ sucess: true, id: newCarrinho.id, index: index - 1 })
+            }
+
+
+
         } else {
-            return ({sucess:false,msg:"carrinho vazio"})
+            return ({ sucess: false, msg: "carrinho vazio" })
         }
-        
+
 
 
 
@@ -132,21 +154,21 @@ export default class server {
 
     signIn = async (phoneNumber) => {
 
-        
-        
+
+
 
         try {
             const sucess = await auth().signInWithPhoneNumber(phoneNumber, true)
 
             if (sucess) {
                 console.warn(sucess)
-                return ({sucess})
+                return ({ sucess })
             }
 
         } catch (error) {
-            
+
             console.warn(error)
-            return ({error})
+            return ({ error })
         }
 
     }
@@ -155,26 +177,25 @@ export default class server {
     signOut = async (props) => {
 
 
-        console.warn("oi")
         try {
-            
+
             const sucess = await auth().signOut()
-            
+
             if (sucess) {
-                
-                auth().onAuthStateChanged((user)=> {
-                    
+
+                auth().onAuthStateChanged((user) => {
+
                     if (!user) {
                         props.navigation.replace("login")
                     }
                 })
 
-                return ({sucess})
+                return ({ sucess })
 
             }
 
         } catch (error) {
-            return ({error})
+            return ({ error })
         }
     }
 
