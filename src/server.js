@@ -2,7 +2,7 @@ import data from './produtos'
 import carrinhos from './carrinhos'
 import crypto from 'crypto-js'
 
-import firebase from '@react-native-firebase/auth'
+import auth from '@react-native-firebase/auth'
 
 
 const user = {
@@ -54,6 +54,17 @@ export default class server {
         
     }
 
+    iscurrentUser = async (props) =>{
+        
+        const user = auth().currentUser
+
+        if (!user) {
+            props.navigation.replace("login")
+        } else {
+            return user
+        }
+        
+    }
 
     finalizarCompra(carrinho, length) {
         
@@ -121,12 +132,11 @@ export default class server {
 
     signIn = async (phoneNumber) => {
 
-        console.warn(phoneNumber)
         
-        /*
+        
 
         try {
-            const sucess = await firebase().signInWithPhoneNumber("+351 965 861 713", true)
+            const sucess = await auth().signInWithPhoneNumber(phoneNumber, true)
 
             if (sucess) {
                 console.warn(sucess)
@@ -138,16 +148,36 @@ export default class server {
             console.warn(error)
             return ({error})
         }
-        */
+
     }
 
-    confirmCode = async (code) => {
+
+    signOut = async (props) => {
+
+
+        console.warn("oi")
         try {
-            const sucess = await firebase().verifyPhoneNumber()
-        } catch (error) {
             
+            const sucess = await auth().signOut()
+            
+            if (sucess) {
+                
+                auth().onAuthStateChanged((user)=> {
+                    
+                    if (!user) {
+                        props.navigation.replace("login")
+                    }
+                })
+
+                return ({sucess})
+
+            }
+
+        } catch (error) {
+            return ({error})
         }
     }
+
 
 
 }

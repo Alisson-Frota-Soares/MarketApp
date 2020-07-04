@@ -17,13 +17,18 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation'
 
 
 import auth from '@react-native-firebase/auth'
+import server from './server'
+
+const servidor = new server()
+
+
 
 import {
   Drawer,
 } from 'react-native-paper';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { color } from 'react-native-reanimated';
+
 
 const Stack = createStackNavigator();
 const DrawerComp = createDrawerNavigator();
@@ -65,9 +70,9 @@ function InitialRouteApp({ navigation }) {
 const DrawerContent = (props) => {
 
   return (
-    <View style={{flex:1}}>
+    <View style={{ flex: 1 }}>
       <View style={styles.drawerHeader}>
-        <Image source={require("./images/sua-logo.png")} style={{width:100, height:100}} />
+        <Image source={require("./images/sua-logo.png")} style={{ width: 100, height: 100 }} />
       </View>
       <DrawerContentScrollView {...props} >
         <View
@@ -83,21 +88,22 @@ const DrawerContent = (props) => {
 
 
 
+            <DrawerItemList {...props} />
+
+          </Drawer.Section>
+          <Drawer.Section title="outras coisas">
             <DrawerItem
               icon={({ color, size }) => (
                 <MaterialCommunityIcons
-                  name="home"
+                  name="logout"
                   color="#0088a9"
                   size={size}
                 />
               )}
-              label="Inicio"
-              onPress={() => { props.navigation.navigate("home") }}
+              label="Encerrar sessão"
+              onPress={() =>{ servidor.signOut(this.props)}}
+
             />
-
-          </Drawer.Section>
-          <Drawer.Section title="outras coisas">
-
           </Drawer.Section>
         </View>
       </DrawerContentScrollView>
@@ -109,13 +115,21 @@ const DrawerContent = (props) => {
 
 
 
-function DrawerNav({ navigation, route }) {
+function DrawerNav({ navigation }) {
 
 
 
   return (
-    <DrawerComp.Navigator drawerType="back" drawerContent={(props) => <DrawerContent {...props} />}  >
-      <DrawerComp.Screen name="home" component={homeRoute} />
+    <DrawerComp.Navigator drawerType="back" drawerContent={(props) => <DrawerContent {...props} />} drawerContentOptions={{ activeBackgroundColor: "rgba(0, 135, 169, 0.5)", activeTintColor: "#fff", inactiveTintColor: "#0088a9", }} >
+      <DrawerComp.Screen
+        name="home"
+        component={homeRoute}
+        options={{
+          drawerIcon: ({ color }) => <MaterialCommunityIcons name="home" size={30} color={color} />,
+
+        }}
+      />
+
     </DrawerComp.Navigator>
 
 
@@ -126,7 +140,7 @@ function DrawerNav({ navigation, route }) {
 function switchApp({ navigation }) {
   return (
     <NavigationContainer>
-      <SwitchComp.Navigator initialRouteName={auth().currentUser? "homeDrawer" : "login"} screenOptions={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} >
+      <SwitchComp.Navigator initialRouteName={auth().currentUser ? "homeDrawer" : "login"} screenOptions={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} >
         <SwitchComp.Screen name="login" component={InitialRouteApp} />
         <SwitchComp.Screen name="homeDrawer" component={DrawerNav} />
       </SwitchComp.Navigator>
@@ -193,8 +207,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 150,
     backgroundColor: "#0088a9",
-    justifyContent:"center",
-    alignItems:"center"
+    justifyContent: "center",
+    alignItems: "center"
   }
 })
 

@@ -4,7 +4,8 @@ import {
     Image,
     TouchableOpacity,
     Button,
-    StatusBar
+    StatusBar,
+    ToastAndroid
 } from 'react-native';
 
 import { View, Input, Text, Form, Header, Left, Title, Item, Label } from 'native-base'
@@ -48,19 +49,29 @@ export default class login extends Component {
     }
 
     Login = async () => {
-        console.warn(typeof(this.state.Input))
-        console.warn(typeof(toString(this.state.Input)))
 
-        const response = await servidor.signIn(toString(this.state.Input))
+        if (this.state.Input === null || this.state.Input === "") {
+            ToastAndroid.show("Preencha com seu numero de telemovel", 1)
+            return null
+        }
+
+        const response = await servidor.signIn(this.state.Input)
 
         if (response.sucess) {
-            this.props.navigation.navigate("confirmar", response.sucess)
-        }else{
-            console.warn(response.error)
+            this.props.navigation.navigate("confirmar", { confirm: response.sucess })
+        } else {
+
+            if (response.error.code === "auth/invalid-phone-number") {
+                ToastAndroid.show("Numero inválido", 1)
+            } else if (response.error.code === "auth/network-request-failed") {
+                ToastAndroid.show("Falha na conexão de internet", 1)
+            } else {
+                ToastAndroid.show("erro desconhecido", 1)
+            }
         }
 
 
-        
+
     }
 
     _renderItem = ({ item }) => {

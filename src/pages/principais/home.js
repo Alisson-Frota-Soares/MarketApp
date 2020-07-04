@@ -34,8 +34,9 @@ export default class home extends Component {
     }
 
     componentDidMount(){
-        
-        
+    
+        servidor.iscurrentUser(this.props)//desloga o app se nao houver usuario
+
     }
     addProduto = (id) => {
 
