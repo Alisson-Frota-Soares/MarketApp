@@ -35,6 +35,7 @@ App em react-native para "bipar" os produtos da loja e poupar tempo no caixa e d
     - [ ] alerta de loading procurar produto
     - [ ] alerta de loading finalizar compra
     - [ ] imagens nos slides de intro
+    - [ ] tutorial no app
 
 ## Versões adaptadas do app para criar aos seguintes bancos de dados 
 - [ ] mySQL
