@@ -3,13 +3,14 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    Button,
     StatusBar,
-    ToastAndroid
+    ToastAndroid,
 } from 'react-native';
 
 import { View, Input, Text, Form, Header, Left, Title, Item, Label } from 'native-base'
 import AppIntroSlider from 'react-native-app-intro-slider';
+import { LoadingAlert } from '../../components/components'
+
 
 import Server from '../../server'
 
@@ -43,14 +44,18 @@ export default class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showRealApp: false,
-            Input: null
+            showRealApp: true,
+            Input: null,
+            isLoading: false
         };
     }
 
     Login = async () => {
 
+        this.setState({isLoading: true})
+
         if (this.state.Input === null || this.state.Input === "") {
+            this.setState({isLoading: false})
             ToastAndroid.show("Preencha com seu numero de telemovel", 1)
             return null
         }
@@ -58,8 +63,10 @@ export default class login extends Component {
         const response = await servidor.signIn(this.state.Input)
 
         if (response.sucess) {
+            this.setState({isLoading: false})
             this.props.navigation.navigate("confirmar", { confirm: response.sucess })
         } else {
+            this.setState({isLoading: false})
 
             if (response.error.code === "auth/invalid-phone-number") {
                 ToastAndroid.show("Numero inválido", 1)
@@ -69,6 +76,8 @@ export default class login extends Component {
                 ToastAndroid.show("erro desconhecido", 1)
             }
         }
+
+        this.setState({isLoading: false})
 
 
 
@@ -100,6 +109,9 @@ export default class login extends Component {
                         </Left>
                     </Header>
 
+                    
+                    
+
                     <View  >
                         <Text style={styles.Title}>Sua Marca</Text>
 
@@ -122,6 +134,9 @@ export default class login extends Component {
                         </TouchableOpacity>
 
                     </View>
+
+
+                    <LoadingAlert isVisible={this.state.isLoading} />
 
                 </View>
             )

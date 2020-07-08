@@ -11,6 +11,7 @@ import {
 import { View, Input, Text, Form, Header, Left, Item, Label, Body, Title } from 'native-base'
 
 import Icon from 'react-native-vector-icons/Ionicons'
+import { LoadingAlert } from '../../components/components'
 
 import auth from '@react-native-firebase/auth'
 
@@ -21,14 +22,18 @@ export default class confirmLogin extends Component {
         const { params } = this.props.route
         this.state = {
             Input: null,
-            confirm: params.confirm
+            confirm: params.confirm,
+            isLoading: false
         };
     }
 
 
     Confirmar = async () => {
 
+        this.setState({isLoading: true})
+
         if (this.state.Input === null || this.state.Input === "") {
+            this.setState({isLoading: false})
             ToastAndroid.show("codigo vazio, preencha o campo", 1)
             return null
         }
@@ -38,6 +43,7 @@ export default class confirmLogin extends Component {
             const confirm = await this.state.confirm.confirm(this.state.Input)
 
             if (confirm) {
+                this.setState({isLoading: false})
 
                 auth().onAuthStateChanged((user) => {
                     console.warn(user)
@@ -50,6 +56,7 @@ export default class confirmLogin extends Component {
 
 
         } catch (error) {
+            this.setState({isLoading: false})
 
             if (error.code === "auth/invalid-verification-code") {
                 ToastAndroid.show("Código invalido",1)    
@@ -61,6 +68,8 @@ export default class confirmLogin extends Component {
 
             
         }
+
+        this.setState({isLoading: false})
 
 
 
@@ -105,6 +114,8 @@ export default class confirmLogin extends Component {
                     </TouchableOpacity>
 
                 </View>
+
+                <LoadingAlert isVisible={this.state.isLoading} />
 
             </View>
         );

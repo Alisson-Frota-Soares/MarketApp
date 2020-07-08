@@ -26,7 +26,7 @@ App em react-native para "bipar" os produtos da loja e poupar tempo no caixa e d
     - [ ] login com google
     - [ ] login com facebook
 - [ ] detalhes para add
-    - [ ] validar login
+    - [x] validar login
     - [ ] validar confirmLogin
     - [ ] validar logout
     - [ ] alerta de loading login

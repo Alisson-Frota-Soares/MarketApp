@@ -13,7 +13,7 @@ import { Header, Left, Right, Body, Title, Radio } from "native-base";
 
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconIonicons from 'react-native-vector-icons/Ionicons'
-
+import { LoadingAlert } from '../../components/components'
 
 
 
@@ -29,18 +29,20 @@ export default class home extends Component {
         this.addProduto.bind(this)
         this.state = {
             carrinho: [],
-            isSelecting: false
+            isSelecting: false,
+            isLoading: false,
+            loadMsg: "A carregar"
         };
     }
 
-    componentDidMount(){
-    
+    componentDidMount() {
+
         servidor.iscurrentUser(this.props)//desloga o app se nao houver usuario
 
     }
     addProduto = (id) => {
+        this.setState({ isLoading: true, loadMsg: "Procurando o produto" })
 
-        
 
         //request ao servidor        
         let response = servidor.procurarProduto(id, this.state.carrinho)
@@ -48,9 +50,10 @@ export default class home extends Component {
         //verifica se encontrou o produto com sucesso
         if (response.sucess) {
 
+            this.setState({ isLoading: false })
             //se o produto ja estiver no carrinho aumenta a quantidade
             if (response.isOnList) {
-                
+
                 this.state.carrinho[response.indexOnLIST].quantidade++
                 this.forceUpdate()
             } else if (response.produto) {
@@ -63,16 +66,18 @@ export default class home extends Component {
 
 
         } else {
-            Alert.alert(response.msg)
+            this.setState({ isLoading: false })
+            Alert.alert("erro", response.msg)
         }
 
-        
+
 
 
 
     }
 
     finalizarCompra() {
+        this.setState({ isLoading: true, loadMsg: "A finalizar a sua compra" })
 
         //request a uma função no servidor, que tenta finalizar a compra
         let response = servidor.finalizarCompra(this.state.carrinho, this.state.carrinho.length)
@@ -80,11 +85,13 @@ export default class home extends Component {
 
         //verificação se o servidor conseguiu finalizar a compra ou não
         if (response.sucess) {
+            this.setState({ isLoading: false })
             //caso tudo tenha ocorrido com sucesso, vai para tela "finalizar"
             //e mostra o cod de barras da compra, para ser escaneado no caixa do supermercado
             this.props.navigation.navigate("finalizar", { code: response.id, index: response.index })
         } else {
-            Alert.alert(response.msg)
+            this.setState({ isLoading: false })
+            Alert.alert("erro", response.msg)
         }
 
 
@@ -108,7 +115,7 @@ export default class home extends Component {
                         item.selected = item.selected ? false : true
                         this.isSelecting()
                     } else {
-                        this.props.navigation.navigate("produtoInfo", {item:item})
+                        this.props.navigation.navigate("produtoInfo", { item: item })
                     }
                 }}
 
@@ -277,9 +284,9 @@ export default class home extends Component {
 
     EmptyRender() {
         return (
-            <View style={{ flex:1 , justifyContent:"center", alignItems:"center"}}>
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 <IconIonicons name="ios-cart" size={50} />
-                <Text style={{textAlign:"center", fontSize:16}} >Clique no botão abaixo para{"\n"}começar sua compra!</Text>
+                <Text style={{ textAlign: "center", fontSize: 16 }} >Clique no botão abaixo para{"\n"}começar sua compra!</Text>
             </View>
 
         )
@@ -315,7 +322,7 @@ export default class home extends Component {
 
 
                 <FlatList
-                    contentContainerStyle={{flex:1}}
+                    contentContainerStyle={{ flex: 1 }}
                     data={this.state.carrinho}
                     renderItem={({ item, index }) => this.card(item, index)}
                     ListEmptyComponent={this.EmptyRender()}
@@ -329,6 +336,9 @@ export default class home extends Component {
                 >
                     <IconIonicons name="ios-barcode" size={35} color="#fff" />
                 </TouchableOpacity>
+
+
+                <LoadingAlert isVisible={this.state.isLoading} loadMsg={this.state.loadMsg} />
             </View>
         );
     }
