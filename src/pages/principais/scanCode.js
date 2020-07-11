@@ -36,12 +36,14 @@ export default class scanCode extends Component {
     onBarCodeRead(code) {
         //funçao ativada quando ler o codigo
 
+        //console.warn(code.data)
+
         this.setState({ isScanning: true })
         this.tocarBeep()
 
         const { params } = this.props.route
 
-        console.warn(code.type)
+        //console.warn(code.type)
 
         //esta função retorna o valor do cod para uma função na tela home
         params.returnData(code.data);
@@ -175,13 +177,17 @@ export default class scanCode extends Component {
                                 underlineColorAndroid="#aaa"
                                 keyboardType="numeric"
                                 style={{ width: "90%" }}
-                                onChangeText={(t) => this.setState({ Input: t })}
+                                
+                                onChangeText={(e) => this.setState({ Input: {data:e} })}
                                 onSubmitEditing={() => {
-
+                                    
+                                    
                                     if (this.state.Input !== null) {
+                                        
                                         this.onBarCodeRead(this.state.Input)
                                         this.setState({ isModalVisible: false })
                                     } else {
+                                        
                                         false
                                     }
                                     
