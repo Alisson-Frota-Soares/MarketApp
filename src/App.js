@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Text } from 'react-native';
 
 import home from './pages/principais/home'
 import scanCode from './pages/principais/scanCode'
@@ -15,6 +15,9 @@ import { createStackNavigator, CardStyleInterpolators, } from "@react-navigation
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
 import { createSwitchNavigator, createAppContainer } from 'react-navigation'
 
+
+
+import { LoadingAlert } from './components/components'
 
 import auth from '@react-native-firebase/auth'
 import server from './server'
@@ -35,7 +38,98 @@ const DrawerComp = createDrawerNavigator();
 const SwitchComp = createStackNavigator();
 
 
+let isLoading = false
+let loadMsg = "A carregar"
 
+
+
+ class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false
+    };
+  }
+
+  homeRoute() {
+    return (
+      <Stack.Navigator initialRouteName="home" screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} >
+        <Stack.Screen name="home" component={home} options={{ headerShown: false, }} />
+        <Stack.Screen name="scanear" component={scanCode} options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }} />
+        <Stack.Screen name="finalizar" component={finalizar} options={{ headerShown: false }} />
+        <Stack.Screen name="produtoInfo" component={produtoInfo} options={{ headerShown: false }} />
+
+      </Stack.Navigator>
+
+
+    )
+  }
+
+
+
+  InitialRouteApp() {
+    return (
+      <Stack.Navigator initialRouteName="login" screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} >
+        <Stack.Screen name="login" component={login} options={{ headerShown: false }} />
+        <Stack.Screen name="confirmar" component={confirmLogin} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    )
+
+  }
+
+
+  DrawerNav() {
+    return (
+      <DrawerComp.Navigator drawerType="back" drawerContent={(props) => <DrawerContent {...props} />} drawerContentOptions={{ activeBackgroundColor: "rgba(0, 135, 169, 0.5)", activeTintColor: "#fff", inactiveTintColor: "#0088a9", }} >
+        <DrawerComp.Screen
+          name="home"
+          component={homeRoute}
+          options={{
+            drawerIcon: ({ color }) => <MaterialCommunityIcons name="home" size={30} color={color} />,
+
+          }}
+        />
+
+
+
+      </DrawerComp.Navigator>
+
+
+    )
+  }
+
+
+
+
+  render() {
+    return (
+      <NavigationContainer>
+        <SwitchComp.Navigator initialRouteName={auth().currentUser ? "homeDrawer" : "login"} screenOptions={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} >
+          <SwitchComp.Screen name="login" component={this.InitialRouteApp} />
+          <SwitchComp.Screen name="homeDrawer" component={this.DrawerNav} />
+        </SwitchComp.Navigator>
+        <LoadingAlert isVisible={this.state.isLoading} loadMsg={this.loadMsg} />
+      </NavigationContainer>
+    )
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////
 
 
 function homeRoute({ navigation }) {
@@ -44,7 +138,7 @@ function homeRoute({ navigation }) {
       <Stack.Screen name="home" component={home} options={{ headerShown: false, }} />
       <Stack.Screen name="scanear" component={scanCode} options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }} />
       <Stack.Screen name="finalizar" component={finalizar} options={{ headerShown: false }} />
-      <Stack.Screen name="produtoInfo" component={produtoInfo} options={{ headerShown:false}} />
+      <Stack.Screen name="produtoInfo" component={produtoInfo} options={{ headerShown: false }} />
 
     </Stack.Navigator>
 
@@ -71,6 +165,7 @@ const DrawerContent = (props) => {
 
   return (
     <View style={{ flex: 1 }}>
+
       <View style={styles.drawerHeader}>
         <Image source={require("./images/sua-logo.png")} style={{ width: 100, height: 100 }} />
       </View>
@@ -101,7 +196,27 @@ const DrawerContent = (props) => {
                 />
               )}
               label="Encerrar sessão"
-              onPress={() =>{ servidor.signOut(this.props)}}
+              onPress={async () => {
+                isLoading = true
+
+                
+                //const response = await servidor.signOut(this.props)
+                //isLoading= false
+
+/*
+                if (response.sucess) {
+                  console.warn("sucess")
+
+                  //this.props.navigation.replace("login")
+
+
+                } else {
+                  console.warn("erro")
+                  //alert(response.error)
+
+                }*/
+
+              }}
 
             />
           </Drawer.Section>
@@ -130,6 +245,8 @@ function DrawerNav({ navigation }) {
         }}
       />
 
+
+
     </DrawerComp.Navigator>
 
 
@@ -144,6 +261,7 @@ function switchApp({ navigation }) {
         <SwitchComp.Screen name="login" component={InitialRouteApp} />
         <SwitchComp.Screen name="homeDrawer" component={DrawerNav} />
       </SwitchComp.Navigator>
+      <LoadingAlert isVisible={isLoading} loadMsg={loadMsg} />
     </NavigationContainer>
   )
 }

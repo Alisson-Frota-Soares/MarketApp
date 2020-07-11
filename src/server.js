@@ -183,12 +183,12 @@ export default class server {
 
             if (sucess) {
 
-                auth().onAuthStateChanged((user) => {
+                /*auth().onAuthStateChanged((user) => {
 
                     if (!user) {
                         props.navigation.replace("login")
                     }
-                })
+                })*/
 
                 return ({ sucess })
 
