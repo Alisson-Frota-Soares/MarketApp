@@ -14,7 +14,7 @@ const produtos = [{
 {
     produto: "banana",
     marca: "banana tem marca?",
-    id: "5601227012439",
+    id: "33",
     caracteristicas: [
         "250",
         "g"
@@ -27,7 +27,7 @@ const produtos = [{
 {
     produto: "biscoito",
     marca: "passatempo",
-    id: "33",
+    id: "5601227012439",
     caracteristicas: ["200", "g"],
     preco: 1.13,
     quantidade: 1,
