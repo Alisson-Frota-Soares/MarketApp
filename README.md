@@ -1,7 +1,12 @@
 # MarketApp
-App em react-native para "bipar" os produtos da loja e poupar tempo no caixa e diminuir as filas
+App em react-native para "bipar" os produtos da loja, poupar tempo no caixa e diminuir as filas
+----
+## prints
+<img src="src/images/prints/1.jpg" width="200"/>
+<img src="src/images/prints/2.jpg" width="200"/>
+<img src="src/images/prints/3.jpg" width="200"/>
+<img src="src/images/prints/4.jpg" width="200"/>
 
-- - - - - 
 ## objetivos
 
 - [x] cards dos produtos bipados
