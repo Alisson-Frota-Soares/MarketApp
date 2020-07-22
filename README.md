@@ -1,5 +1,5 @@
 # MarketApp
-App em react-native para "bipar" os produtos da loja, poupar tempo no caixa e diminuir as filas
+App em react-native para escanear os produtos da loja, poupar tempo no caixa e diminuir as filas
 ----
 ## prints
 <img src="src/images/prints/1.jpg" width="200"/>
